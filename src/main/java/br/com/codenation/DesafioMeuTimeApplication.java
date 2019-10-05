@@ -111,7 +111,7 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 				
 			}
 			
-			java.util.Collections.sort(list);
+			Collections.sort(list);
 			return list;
 			
 		}else {
@@ -123,13 +123,13 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 	@Desafio("buscarMelhorJogadorDoTime") //OK
 	public Long buscarMelhorJogadorDoTime(Long idTime) {
 		Integer melhorJogador = 0;
-		Long idMelhorJogador = null;
+		Long idMelhorJogador = 0L;
 		
 		if (times.containsKey(idTime)) {
 			
 			for (Long key : jogadores.keySet()) {
-				if(jogadores.get(key).getIdTime().equals(idTime)) {
-					if(jogadores.get(key).getNivelHabilidade() > melhorJogador || jogadores.get(key).getNivelHabilidade().equals(melhorJogador) && key<idMelhorJogador || idMelhorJogador.equals(null)) {
+				if(jogadores.get(key).getIdTime().compareTo(idTime) == 0) {
+					if(jogadores.get(key).getNivelHabilidade() > melhorJogador || jogadores.get(key).getNivelHabilidade() == melhorJogador && key<idMelhorJogador || idMelhorJogador == 0L) {
 						melhorJogador = jogadores.get(key).getNivelHabilidade();
 						idMelhorJogador = key;
 					}
@@ -150,7 +150,7 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 			
 			for (Long key : jogadores.keySet()) {
 	            
-				if(jogadores.get(key).getIdTime().equals(idTime)) {
+				if(jogadores.get(key).getIdTime().compareTo(idTime) == 0) {
 					long intervalo = ChronoUnit.DAYS.between(jogadores.get(key).getDataNascimento(), LocalDate.now());
 					if(intervalo>dias || intervalo == dias && key < idJogador || idJogador == 0) {
 						dias = intervalo;
@@ -175,14 +175,14 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 		
 		if(times.isEmpty()) {
 			return list;
+		}else {
+			for (Long key : times.keySet()) {
+				list.add(key);
+			}
+			
+			Collections.sort(list);
+			return list;
 		}
-		
-		for (Long key : times.keySet()) {
-			list.add(key);
-		}
-		
-		Collections.sort(list);
-		return list;
 		
 		
 	}
@@ -196,7 +196,7 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 			
 			for (Long key : jogadores.keySet()) {
 				if(jogadores.get(key).getIdTime() == idTime) {
-					if(jogadores.get(key).getSalario().floatValue() > salario.floatValue() || jogadores.get(key).getSalario().floatValue() == salario.floatValue() && key<idJogador || idJogador == 0) {
+					if(jogadores.get(key).getSalario().compareTo(salario) == 1 || jogadores.get(key).getSalario().compareTo(salario) == 0 && key<idJogador || idJogador == 0) {
 						salario = jogadores.get(key).getSalario();
 						idJogador = key;
 					}
@@ -225,7 +225,6 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 		ArrayList<Long> list = new ArrayList<Long>();
 		long idPiorJogador = 0;
 		int nHabilidade = 0;
-		int ind = 0;
 		
 		if (jogadores.isEmpty()) {
 			return list;
@@ -257,7 +256,7 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 	@Desafio("buscarCorCamisaTimeDeFora")
 	public String buscarCorCamisaTimeDeFora(Long timeDaCasa, Long timeDeFora) {
 		if(times.containsKey(timeDaCasa) && times.containsKey(timeDeFora)) {
-			if(times.get(timeDaCasa).getCorUniformePrincipal() == times.get(timeDeFora).getCorUniformePrincipal()) {
+			if(times.get(timeDaCasa).getCorUniformePrincipal().equals(times.get(timeDeFora).getCorUniformePrincipal())) {
 				return times.get(timeDeFora).getCorUniformeSecundario();
 			}else {
 				return times.get(timeDeFora).getCorUniformePrincipal();
