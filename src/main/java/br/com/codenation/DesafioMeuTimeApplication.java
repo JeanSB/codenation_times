@@ -30,7 +30,6 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 			times.put(id, new Time(nome, dataCriacao, corUniformePrincipal, corUniformeSecundario));
 		}
 		
-		
 	}
 
 	@Desafio("incluirJogador") //Ok
@@ -190,14 +189,14 @@ public class DesafioMeuTimeApplication implements MeuTimeInterface {
 
 	@Desafio("buscarJogadorMaiorSalario") //Ok
 	public Long buscarJogadorMaiorSalario(Long idTime) {
-		BigDecimal salario = null;
-		Long idJogador = null;
+		BigDecimal salario = new BigDecimal(0);
+		Long idJogador = 0L;
 		
 		if (times.containsKey(idTime)) {
 			
 			for (Long key : jogadores.keySet()) {
 				if(jogadores.get(key).getIdTime() == idTime) {
-					if(jogadores.get(key).getSalario().floatValue() > salario.floatValue() || jogadores.get(key).getSalario().floatValue() == salario.floatValue() && key<idJogador || idJogador == null) {
+					if(jogadores.get(key).getSalario().floatValue() > salario.floatValue() || jogadores.get(key).getSalario().floatValue() == salario.floatValue() && key<idJogador || idJogador == 0) {
 						salario = jogadores.get(key).getSalario();
 						idJogador = key;
 					}
